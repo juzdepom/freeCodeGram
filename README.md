@@ -1,4 +1,4 @@
-Creating an Instagram clone in Laravel.
+Creating an Instagram clone in Laravel - original Github project [here](https://github.com/coderstape/freeCodeGram)
 
 [Laravel PHP Framework Tutorial - Full Course for Beginners (2019)](https://www.youtube.com/watch?v=ImtZ5yENzgE&t=572s) by FreeCodeCamp
 
@@ -26,9 +26,21 @@ Learned:
 * was having a hard time finding the Model class Profile and Post when using artisan tinker. User::all() would return information but Post::all() and Profile::all() would return 'not found.' Turns out I had to type \App\Post::all() and \App\Profile::all(). Not sure how to truncate that.
 * ```App\Post::truncate(); ``` in artisan tinker to delete all post objects.
 
-* ran ```composer require intervention/image``` to install an open-source PHP image handling and manipulation library (http://image.intervention.io/);
+* ran ```composer require interve  ntion/image``` to install an open-source PHP image handling and manipulation library (http://image.intervention.io/);
 * ran ```php artisan make:policy ProfilePolicy -m Profile``` which created a Policy folder in the app folder.
 * note: you need to be careful of the order you put your routes in web.php; Anything with a variable should be at the end!
 * implemented the Vue follow button! 
 * axios request was returning with 500 server error and it turned out that I forgot to add ```use App\User;``` in the FollowsController.php file
 * new term: we need to create a pivot table for the many to many relationship: it holds the id of the two related models.
+* ran ```php artisan make:migration create_profile_user_pivot_table --create profile_user```
+* ran ```composer require laravel/telescope``` then ```php artisan telescope:install``` then ```php artisan migrate``` - now you can visit /telescope
+* telescope is a very complete toolset that hooks right up into your application and keeps track of everything that you need
+* 'links()' gets added to the blade.php file whenever pagination gets added in the controller.
+* run ```php artisan telescope:clear``` whenever you want to erase everything on telescope
+* have to use ```use Illuminate\Support\Facades``` to enable caching
+* we use the free service ```mailtrap.io``` to send emails
+* ran ```php artisan make:mail NewUserWelcomeMail -m emails.welcome-email```
+
+* TO DO - read Laravel documentation from top to bottom
+* check our coderstape on Youtube (he was the one who made this tutorial)
+* subscribe to laravel-news.com

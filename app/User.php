@@ -6,6 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Mail\NewUserWelcomeMail;
+use Illuminate\Support\Facades\Mail;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -25,11 +28,13 @@ class User extends Authenticatable
     protected static function boot(){
         parent::boot();
 
-        //get fired whenever a new User is created
+        //get fired whenever a new User is created 
         static::created(function ($user) {
             $user->profile()->create([
                 'title' => $user->username
             ]);
+
+            Mail::to($user->email)->send(new NewUserWelcomeMail());
         });
     }
 
@@ -39,5 +44,9 @@ class User extends Authenticatable
 
     public function profile(){
         return $this->hasOne(Profile::class);
+    }
+
+    public function following(){
+        return $this->belongsToMany(Profile::class);
     }
 }

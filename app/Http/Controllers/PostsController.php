@@ -13,6 +13,20 @@ class PostsController extends Controller
         $this->middleware('auth');
     }
 
+    //display all the posts of the people that we are following in chronological order (most recent at the top)
+    public function index(){
+        //grab all of the users that we are following
+        //have to put 'profiles.user_id' because user also has .user_id
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+
+        //latest sorts the array where most recent Post is on top based off of the timestamp when it was created
+        //with('user') loads the User relationship with the Post
+        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(4);
+
+        return view('posts.index', compact('posts'));
+
+    }
+
     public function create(){
         return view('posts.create');
     }
@@ -24,6 +38,7 @@ class PostsController extends Controller
             'image' => ['required', 'image'],
         ]);
 
+        //store locally in the public/uploads folder
         $imagePath = request('image')->store('uploads', 'public');
 
         //wrap an image file around the intervention class so that we can start to manipulate it

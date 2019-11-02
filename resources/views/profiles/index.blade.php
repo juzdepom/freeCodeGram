@@ -11,7 +11,7 @@
                 <div class="d-flex align-items-center pb-4">
                     <div class="h4">{{ $user->username }}</div>
                     <!-- Vue Follow Button -->
-                    <follow-button user-id="{{ $user->id }}"/>
+                    <follow-button user-id="{{ $user->id }}" follows="{{ $follows }}"/>
                 </div>
                 
                 @can('update', $user->profile)
@@ -24,10 +24,10 @@
             @endcan
 
 
-            <div class="d-flex">
-                <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
-                <div class="pr-5"><strong>23k</strong> followers</div>
-                <div class="pr-5"><strong>212</strong> following</div>
+            <div class="d-flex">  
+                <div class="pr-5"><strong>{{ $postCount }}</strong> posts</div>
+                <div class="pr-5"><strong>{{ $followersCount }}</strong> followers</div>
+                <div class="pr-5"><strong>{{ $followingCount }}</strong> following</div>
             </div>
             <div class="pt-4 font-weight-bold">{{ $user->profile->title }}</div>
             <div>{{ $user->profile->description }}</div>
